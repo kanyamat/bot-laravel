@@ -480,7 +480,7 @@ if($typeMessage=='text'){
                    // $question = sequents::select('question')
                    //              ->where('seqcode',$seqcode)
                    //              ->first();
-          $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+        $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
         $dbconn = pg_pconnect($conn_string);
                 $result = pg_query($dbconn,"SELECT question FROM sequents WHERE seqcode = '$seqcode'");
                 while ($row = pg_fetch_object($result)) {
@@ -503,7 +503,7 @@ if($typeMessage=='text'){
         return $update_sequentsteps;
     }
     public function seqcode_select($user){
-          $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+        $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
         $dbconn = pg_pconnect($conn_string);  
       
        $result = pg_query($dbconn,"SELECT seqcode FROM sequentsteps WHERE sender_id = '$user'");
