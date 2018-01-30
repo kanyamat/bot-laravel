@@ -58,7 +58,7 @@ class GetMessageController extends Controller
         $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
         $dbconn = pg_pconnect($conn_string);
             
-          $user = 'U2dc636d2cd052e82c29f5284e00f69b9';
+          $user = 'Uc45702b2bf51da1426172a256add3792';
                    
      }
      public function getmessage()
