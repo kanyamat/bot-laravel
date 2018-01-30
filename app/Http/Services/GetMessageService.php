@@ -22,6 +22,10 @@ class GetMessageService
         $this->bot = new LINEBot($this->client, ['channelSecret' => env('df081e404b4755b307fed6a49ceeb8b6
 ')]);
         
+
+
+
+        
         $response = $this->bot->replyText($replyToken, 'hello!');
         
         if ($response->isSucceeded()) {
