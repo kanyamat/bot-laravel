@@ -64,7 +64,7 @@ class GetMessageController extends Controller
      public function getmessage()
     {         
     
-            $httpClient = new CurlHTTPClient('wmIjTcjhN/Lz+dQUSyeDOzeEoJOeNZtedn/jv0+BaQdsLP/6dq1DBguONVNxVYWpIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EtYfaRqO/tCKdkf6eOzQhbjxTN7iikR/P1kn/2g/2NukAdB04t89/1O/w1cDnyilFU=');
+            $httpClient = new CurlHTTPClient('n64kvr/YQ/xK8n94DSiX0kTKDMJxH22NJd0efu9hMa+yas6+mPqa/FqNwSCzqkreIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EtYSghzk4H2IX+JmU+fDvpGXegDum7j2QaTvfWDRLuNpgdB04t89/1O/w1cDnyilFU=');
             $bot = new LINEBot($httpClient, array('channelSecret' => 'df081e404b4755b307fed6a49ceeb8b6
 '));
             // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
@@ -515,7 +515,7 @@ if($typeMessage=='text'){
     }
     public function replymessage($replyToken,$userMessage,$case)
     {
-          $httpClient = new CurlHTTPClient('wmIjTcjhN/Lz+dQUSyeDOzeEoJOeNZtedn/jv0+BaQdsLP/6dq1DBguONVNxVYWpIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EtYfaRqO/tCKdkf6eOzQhbjxTN7iikR/P1kn/2g/2NukAdB04t89/1O/w1cDnyilFU=');
+          $httpClient = new CurlHTTPClient('n64kvr/YQ/xK8n94DSiX0kTKDMJxH22NJd0efu9hMa+yas6+mPqa/FqNwSCzqkreIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EtYSghzk4H2IX+JmU+fDvpGXegDum7j2QaTvfWDRLuNpgdB04t89/1O/w1cDnyilFU=');
             $bot = new LINEBot($httpClient, array('channelSecret' => 'df081e404b4755b307fed6a49ceeb8b6
 '));
             
