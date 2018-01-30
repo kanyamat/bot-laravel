@@ -582,8 +582,8 @@ if($typeMessage=='text'){
                     break;
              case 4 : 
                         $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://rajavithi-bot.herokuapp.com/images/1.png';
-                        $picThumbnail = 'https://rajavithi-bot.herokuapp.com/images/1.png';
+                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/1.png';
+                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/1.png';
                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
                   $multiMessage = new MultiMessageBuilder;
@@ -639,8 +639,8 @@ if($typeMessage=='text'){
                     break;
                 case 7 : 
                         $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://rajavithi-bot.herokuapp.com/images/2-3.png';
-                        $picThumbnail = 'https://rajavithi-bot.herokuapp.com/images/2-3.png';
+                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/2-3.png';
+                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/2-3.png';
                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
                   $multiMessage = new MultiMessageBuilder;
@@ -680,8 +680,8 @@ if($typeMessage=='text'){
                     break; 
                 case 9 : 
                         $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://rajavithi-bot.herokuapp.com/images/4.png';
-                        $picThumbnail = 'https://rajavithi-bot.herokuapp.com/images/4.png';
+                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/4.png';
+                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/4.png';
                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
                   $multiMessage = new MultiMessageBuilder;
@@ -691,8 +691,8 @@ if($typeMessage=='text'){
                     break;  
                 case 10 : 
                         $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://rajavithi-bot.herokuapp.com/images/5.png';
-                        $picThumbnail = 'https://rajavithi-bot.herokuapp.com/images/5.png';
+                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/5.png';
+                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/5.png';
                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
                   $multiMessage = new MultiMessageBuilder;
@@ -702,8 +702,8 @@ if($typeMessage=='text'){
                     break;  
                 case 11 : 
                         $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://rajavithi-bot.herokuapp.com/images/6.png';
-                        $picThumbnail = 'https://rajavithi-bot.herokuapp.com/images/6.png';
+                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/6.png';
+                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/6.png';
                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
                   $multiMessage = new MultiMessageBuilder;
