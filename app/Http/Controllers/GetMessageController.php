@@ -65,7 +65,8 @@ class GetMessageController extends Controller
     {         
     
             $httpClient = new CurlHTTPClient('wmIjTcjhN/Lz+dQUSyeDOzeEoJOeNZtedn/jv0+BaQdsLP/6dq1DBguONVNxVYWpIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EtYfaRqO/tCKdkf6eOzQhbjxTN7iikR/P1kn/2g/2NukAdB04t89/1O/w1cDnyilFU=');
-            $bot = new LINEBot($httpClient, array('channelSecret' => 'a0bc18db616e43e92e50f934a1a81bed'));
+            $bot = new LINEBot($httpClient, array('channelSecret' => 'df081e404b4755b307fed6a49ceeb8b6
+'));
             // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
             $content = file_get_contents('php://input');
             // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
