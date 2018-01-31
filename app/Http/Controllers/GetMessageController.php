@@ -64,8 +64,7 @@ class GetMessageController extends Controller
      public function getmessage()
     {         
     
-            $httpClient = new CurlHTTPClient('ftzTyvy/eLkPnrFnJeB9ML3MburnMJVmJqSlY3MJH8ADKzMLvkc1367BYHfZNN/nIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2Et5oJ/+07/5Vf3tk/fjz6Z6N35X6/o49J8euSDfp+q53QdB04t89/1O/w1cDnyilFU=
-');
+            $httpClient = new CurlHTTPClient('mD3Sqptc5f9R9huvfUsYIn1p1Ptxlu4DcBleoa58OuFlLmLpRtPeWgI4gSnPCkl9IWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EvpMcWwpKyS8uvgm07qEBciplKXnKXfcQ84F0akINdTrQdB04t89/1O/w1cDnyilFU=');
             $bot = new LINEBot($httpClient, array('channelSecret' => 'dea55b0bcff86c1c10fcccdc8b7454cc
 
 '));
