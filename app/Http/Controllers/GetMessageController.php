@@ -85,702 +85,706 @@ class GetMessageController extends Controller
             // return $this->replymessage($replyToken,$userMessage,$case);
             // $case = 1;
             // return $this->replymessage($replyToken,$userMessage,$case);
-                $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
-                $dbconn = pg_pconnect($conn_string);
-                $result = pg_query($dbconn,"SELECT seqcode FROM sequentsteps WHERE sender_id = '$user'");
-                $num = pg_num_rows($result);
-                    if($num==0)         
-                 {  
-                     $seqcode = '0000';
-                     $nextseqcode = '0000';             
-                     $insert_sequentsteps = $this->insert_sequentsteps($user,$seqcode,$nextseqcode);
-                 }
+                // $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+                // $dbconn = pg_pconnect($conn_string);
+                // $result = pg_query($dbconn,"SELECT seqcode FROM sequentsteps WHERE sender_id = '$user'");
+                // $num = pg_num_rows($result);
+                //     if($num==0)         
+                //  {  
+                //      $seqcode = '0000';
+                //      $nextseqcode = '0000';             
+                //      $insert_sequentsteps = $this->insert_sequentsteps($user,$seqcode,$nextseqcode);
+                //  }
       
-                $seqcode = $this->seqcode_select($user);
-        
+                // $seqcode = $this->seqcode_select($user);
+            $userMessage= '555555555555555';
+             $textMessageBuilder = new TextMessageBuilder($userMessage);
+             $response = $bot->replyMessage($replyToken,$textMessageBuilder); 
+
+ }       
 //////////////////////////////////////////////////////////////////
-if($typeMessage=='text'){
-      if(!is_null($events)){
-            $userMessage = $events['events'][0]['message']['text'];
-            }
-        if((strpos($userMessage, 'ขอนัดกลืนแร่') !== false && $seqcode == '0000')|| (strpos($userMessage, 'มีเคส') !== false && $seqcode == '0000') || (strpos($userMessage, 'ขอนัด') !== false && $seqcode == '0000')||(strpos($userMessage, 'ส่งเคส') !== false && $seqcode == '0000')){
-               $case = 12;
-               $seqcode = '0001_1';
-               $nextseqcode = '0002';
+// if($typeMessage=='text'){
+//       if(!is_null($events)){
+//             $userMessage = $events['events'][0]['message']['text'];
+//             }
+//         if((strpos($userMessage, 'ขอนัดกลืนแร่') !== false && $seqcode == '0000')|| (strpos($userMessage, 'มีเคส') !== false && $seqcode == '0000') || (strpos($userMessage, 'ขอนัด') !== false && $seqcode == '0000')||(strpos($userMessage, 'ส่งเคส') !== false && $seqcode == '0000')){
+//                $case = 12;
+//                $seqcode = '0001_1';
+//                $nextseqcode = '0002';
             
-               $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-               $userMessage = 'สวัสดีค่ะ ต้องการนัดกลืนแร่ไหมคะ';
-        }elseif ($userMessage == 'q' || $userMessage == 'Q' || $userMessage == 'เริ่มต้นการใช้งาน' ){
-                  $seqcode = '0000';
-                  $nextseqcode = '0000';
-                  $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                  $case = 1;
-                  $userMessage = 'ออกจากการนัดกลืนแร่เรียบร้อย';
-         }elseif(is_string($userMessage) !== false &&   $seqcode== '0001_1'){
+//                $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                $userMessage = 'สวัสดีค่ะ ต้องการนัดกลืนแร่ไหมคะ';
+//         }elseif ($userMessage == 'q' || $userMessage == 'Q' || $userMessage == 'เริ่มต้นการใช้งาน' ){
+//                   $seqcode = '0000';
+//                   $nextseqcode = '0000';
+//                   $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                   $case = 1;
+//                   $userMessage = 'ออกจากการนัดกลืนแร่เรียบร้อย';
+//          }elseif(is_string($userMessage) !== false &&   $seqcode== '0001_1'){
                 
-                if($userMessage == '1'){
-                    $case = 2;
-                    $seqcode = '0001';
-                    $nextseqcode = '0002';
+//                 if($userMessage == '1'){
+//                     $case = 2;
+//                     $seqcode = '0001';
+//                     $nextseqcode = '0002';
             
-                   $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                   $question = $this->sequents_question($seqcode);
-                   $userMessage = $question;
+//                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                    $question = $this->sequents_question($seqcode);
+//                    $userMessage = $question;
                     
-                }elseif($userMessage == '2'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    //$nextseqcode = '0006';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกต้องการหรือ ไม่ต้องการ';
-                }
-            }elseif(is_string($userMessage)!== false &&  $seqcode == '0001'){
+//                 }elseif($userMessage == '2'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     //$nextseqcode = '0006';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกต้องการหรือ ไม่ต้องการ';
+//                 }
+//             }elseif(is_string($userMessage)!== false &&  $seqcode == '0001'){
                 
-                if($userMessage == '1'){
-                    $case = 4;
-                    $seqcode = '0006';
-                    $nextseqcode = '0007';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                    //รูป
+//                 if($userMessage == '1'){
+//                     $case = 4;
+//                     $seqcode = '0006';
+//                     $nextseqcode = '0007';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                     //รูป
                     
-                }elseif($userMessage == '2'){
-                    $case = 3;
-                    $seqcode = '0003';
-                    $nextseqcode = '0004';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }elseif($userMessage == '3'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    // $nextseqcode = '0006';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ ไม่แน่ใจ';
-                }
-             }elseif(is_string($userMessage) !== false &&   $seqcode== '0003'){
+//                 }elseif($userMessage == '2'){
+//                     $case = 3;
+//                     $seqcode = '0003';
+//                     $nextseqcode = '0004';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }elseif($userMessage == '3'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     // $nextseqcode = '0006';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ ไม่แน่ใจ';
+//                 }
+//              }elseif(is_string($userMessage) !== false &&   $seqcode== '0003'){
                 
-                if($userMessage == '1'){
-                    $case = 13;
-                    $seqcode = '0004';
-                   // $nextseqcode = '0005';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0005';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                    //รูป
+//                 if($userMessage == '1'){
+//                     $case = 13;
+//                     $seqcode = '0004';
+//                    // $nextseqcode = '0005';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0005';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                     //รูป
                     
-                }elseif($userMessage == '2'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    // $nextseqcode = '0006';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกตกลง หรือ มีปัญหาการคุมกำเนิด';
-                }
+//                 }elseif($userMessage == '2'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     // $nextseqcode = '0006';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกตกลง หรือ มีปัญหาการคุมกำเนิด';
+//                 }
             
-             }elseif(is_string($userMessage) !== false &&  $seqcode == '0007'){
+//              }elseif(is_string($userMessage) !== false &&  $seqcode == '0007'){
                 
-                if($userMessage == '1'){
-                    $case = 6;
-                    $seqcode = '0008';
-                    $nextseqcode = '0009';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                    //รูป
+//                 if($userMessage == '1'){
+//                     $case = 6;
+//                     $seqcode = '0008';
+//                     $nextseqcode = '0009';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                     //รูป
                     
-                }elseif($userMessage == '2'){
-                    $case = 4;
-                    $seqcode = '0006';
-                    $nextseqcode = '0007';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }elseif($userMessage == '3'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    // $nextseqcode = '0006';
+//                 }elseif($userMessage == '2'){
+//                     $case = 4;
+//                     $seqcode = '0006';
+//                     $nextseqcode = '0007';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }elseif($userMessage == '3'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     // $nextseqcode = '0006';
                   
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
-                }
-      //*****///
-            }elseif(is_string($userMessage) !== false &&  $seqcode == '0008'){
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
+//                 }
+//       //*****///
+//             }elseif(is_string($userMessage) !== false &&  $seqcode == '0008'){
                 
-                if($userMessage == '1'){
-                    $case = 7;
-                    $seqcode = '0009';
-                    $nextseqcode = '0010';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
+//                 if($userMessage == '1'){
+//                     $case = 7;
+//                     $seqcode = '0009';
+//                     $nextseqcode = '0010';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
                     
-                }elseif($userMessage == '2'){
-                    $case = 9;
-                    $seqcode = '0011';
-                    $nextseqcode = '0012';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่ หรือ ไม่ใช่';
-                }
-            }elseif(is_string($userMessage) !== false &&  $seqcode == '0010'){
+//                 }elseif($userMessage == '2'){
+//                     $case = 9;
+//                     $seqcode = '0011';
+//                     $nextseqcode = '0012';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่ หรือ ไม่ใช่';
+//                 }
+//             }elseif(is_string($userMessage) !== false &&  $seqcode == '0010'){
                 
-                if($userMessage == '1'){
-                    $case = 9;
-                    $seqcode = '0011';
-                    $nextseqcode = '0012';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                    //รูป
+//                 if($userMessage == '1'){
+//                     $case = 9;
+//                     $seqcode = '0011';
+//                     $nextseqcode = '0012';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                     //รูป
                     
-                }elseif($userMessage == '2'){
-                    $case = 7;
-                    $seqcode = '0009';
-                    $nextseqcode = '0010';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }elseif($userMessage == '3'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    // $nextseqcode = '0006';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
-                }
-             }elseif(is_string($userMessage) !== false &&  $seqcode == '0012'){
+//                 }elseif($userMessage == '2'){
+//                     $case = 7;
+//                     $seqcode = '0009';
+//                     $nextseqcode = '0010';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }elseif($userMessage == '3'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     // $nextseqcode = '0006';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
+//                 }
+//              }elseif(is_string($userMessage) !== false &&  $seqcode == '0012'){
                 
-                if($userMessage == '1'){
-                    $case = 6;
-                    $seqcode = '0013';
-                    $nextseqcode = '0018';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                    //รูป
+//                 if($userMessage == '1'){
+//                     $case = 6;
+//                     $seqcode = '0013';
+//                     $nextseqcode = '0018';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                     //รูป
                     
-                }elseif($userMessage == '2'){
-                    $case = 9;
-                    $seqcode = '0011';
-                    $nextseqcode = '0012';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }elseif($userMessage == '3'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    // $nextseqcode = '0006';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
-                }
-            }elseif(is_string($userMessage) !== false &&  $seqcode == '0013'){
+//                 }elseif($userMessage == '2'){
+//                     $case = 9;
+//                     $seqcode = '0011';
+//                     $nextseqcode = '0012';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }elseif($userMessage == '3'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     // $nextseqcode = '0006';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
+//                 }
+//             }elseif(is_string($userMessage) !== false &&  $seqcode == '0013'){
                 
-                if($userMessage == '1'){
-                    $case = 13;
-                    $seqcode = '0018';
-                    // $nextseqcode = '0000';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0000';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
+//                 if($userMessage == '1'){
+//                     $case = 13;
+//                     $seqcode = '0018';
+//                     // $nextseqcode = '0000';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0000';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
                     
-                }elseif($userMessage == '2'){
-                    $case = 10;
-                    $seqcode = '0014';
-                    $nextseqcode = '0015';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่ หรือ ไม่ใช่';
-                }
-             }elseif(is_string($userMessage) !== false &&  $seqcode == '0015'){
+//                 }elseif($userMessage == '2'){
+//                     $case = 10;
+//                     $seqcode = '0014';
+//                     $nextseqcode = '0015';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่ หรือ ไม่ใช่';
+//                 }
+//              }elseif(is_string($userMessage) !== false &&  $seqcode == '0015'){
                 
-                if($userMessage == '1'){
-                    $case = 11;
-                    $seqcode = '0016';
-                    $nextseqcode = '0017';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                    //รูป
+//                 if($userMessage == '1'){
+//                     $case = 11;
+//                     $seqcode = '0016';
+//                     $nextseqcode = '0017';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                     //รูป
                     
-                }elseif($userMessage == '2'){
-                    $case = 10;
-                    $seqcode = '0014';
-                    $nextseqcode = '0015';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }elseif($userMessage == '3'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    // $nextseqcode = '0006';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
-                }
-            }elseif(is_string($userMessage) !== false &&  $seqcode == '0017'){
+//                 }elseif($userMessage == '2'){
+//                     $case = 10;
+//                     $seqcode = '0014';
+//                     $nextseqcode = '0015';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }elseif($userMessage == '3'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     // $nextseqcode = '0006';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
+//                 }
+//             }elseif(is_string($userMessage) !== false &&  $seqcode == '0017'){
                 
-                if($userMessage == '1'){
-                    $case = 13;
-                    $seqcode = '0018';
-                    //$nextseqcode = '0000';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0000';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                    //รูป
+//                 if($userMessage == '1'){
+//                     $case = 13;
+//                     $seqcode = '0018';
+//                     //$nextseqcode = '0000';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0000';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                     //รูป
                     
-                }elseif($userMessage == '2'){
-                    $case = 11;
-                    $seqcode = '0016';
-                    $nextseqcode = '0017';
-                    $question = $this->sequents_question($seqcode);
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }elseif($userMessage == '3'){
-                    $case = 13;
-                    $seqcode = '0005';
-                    // $nextseqcode = '0006';
-                    $question = $this->sequents_question($seqcode);
-                    $seqcode = '0000';
-                    $nextseqcode = '0006';
-                    $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                    $userMessage =  $question;
-                }else{
-                    $case = 1;
-                    $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
-                }
-            // }elseif (strpos($userMessage, 'hello') !== false || strpos($userMessage, 'สวัสดี') !== false){
-            //     $userMessage  = 'สวัสดีค่ะ ';
-            //     $case = 1; 
+//                 }elseif($userMessage == '2'){
+//                     $case = 11;
+//                     $seqcode = '0016';
+//                     $nextseqcode = '0017';
+//                     $question = $this->sequents_question($seqcode);
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }elseif($userMessage == '3'){
+//                     $case = 13;
+//                     $seqcode = '0005';
+//                     // $nextseqcode = '0006';
+//                     $question = $this->sequents_question($seqcode);
+//                     $seqcode = '0000';
+//                     $nextseqcode = '0006';
+//                     $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                     $userMessage =  $question;
+//                 }else{
+//                     $case = 1;
+//                     $userMessage ='กรุณากดเลือกใช่,ไม่ใช่ หรือ เอกสารไม่ครบ';
+//                 }
+//             // }elseif (strpos($userMessage, 'hello') !== false || strpos($userMessage, 'สวัสดี') !== false){
+//             //     $userMessage  = 'สวัสดีค่ะ ';
+//             //     $case = 1; 
             
-            }
-            // else{
-            //     $userMessage  = 'ฉันไม่เข้าใจ';
-            //     $case = 1; 
-            // }     
-/////////////////*******image*****///////////////////////
-}elseif($typeMessage=='image'){
-        switch ($seqcode) {
-            case '0006':
-                $seqcode = '0007';
-                $nextseqcode = '0008';
-                $question = $this->sequents_question($seqcode);
-                $userMessage = $question;
-                $case = 5; 
-                $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                break;
-            case '0009':
-                $seqcode = '0010';
-                $nextseqcode = '0011';
-                $question = $this->sequents_question($seqcode);
-                $userMessage = $question;
-                $case = 5; 
-                $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                $typedoc = '2-3';
-                break;
-            case '0011':
-                $seqcode = '0012';
-                $nextseqcode = '0013';
-                $question = $this->sequents_question($seqcode);
-                $userMessage = $question;
-                $case = 5; 
-                $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                $typedoc = '4';
-                break;
-            case '0014':
-                $seqcode = '0015';
-                $nextseqcode = '0016';
-                $question = $this->sequents_question($seqcode);
-                $userMessage = $question;
-                $case = 5; 
-                $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                $typedoc = '5';
-                break;
-            case '0016':
-                $seqcode = '0017';
-                $nextseqcode = '0018';
-                $question = $this->sequents_question($seqcode);
-                $userMessage = $question;
-                $case = 5; 
-                $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
-                $typedoc = '6';
-                break;
+//             }
+//             // else{
+//             //     $userMessage  = 'ฉันไม่เข้าใจ';
+//             //     $case = 1; 
+//             // }     
+// /////////////////*******image*****///////////////////////
+// }elseif($typeMessage=='image'){
+//         switch ($seqcode) {
+//             case '0006':
+//                 $seqcode = '0007';
+//                 $nextseqcode = '0008';
+//                 $question = $this->sequents_question($seqcode);
+//                 $userMessage = $question;
+//                 $case = 5; 
+//                 $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                 break;
+//             case '0009':
+//                 $seqcode = '0010';
+//                 $nextseqcode = '0011';
+//                 $question = $this->sequents_question($seqcode);
+//                 $userMessage = $question;
+//                 $case = 5; 
+//                 $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                 $typedoc = '2-3';
+//                 break;
+//             case '0011':
+//                 $seqcode = '0012';
+//                 $nextseqcode = '0013';
+//                 $question = $this->sequents_question($seqcode);
+//                 $userMessage = $question;
+//                 $case = 5; 
+//                 $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                 $typedoc = '4';
+//                 break;
+//             case '0014':
+//                 $seqcode = '0015';
+//                 $nextseqcode = '0016';
+//                 $question = $this->sequents_question($seqcode);
+//                 $userMessage = $question;
+//                 $case = 5; 
+//                 $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                 $typedoc = '5';
+//                 break;
+//             case '0016':
+//                 $seqcode = '0017';
+//                 $nextseqcode = '0018';
+//                 $question = $this->sequents_question($seqcode);
+//                 $userMessage = $question;
+//                 $case = 5; 
+//                 $update_sequentsteps = $this->update_sequentsteps($user,$seqcode,$nextseqcode);
+//                 $typedoc = '6';
+//                 break;
             
             
-            // default:
-            //      $userMessage  = 'ส่งเพียง1รูป';
-            //     $case = 1; 
-            //     break;
-        }
+//             // default:
+//             //      $userMessage  = 'ส่งเพียง1รูป';
+//             //     $case = 1; 
+//             //     break;
+//         }
                
              
-}
-// else{
-//       $userMessage  = 'สติ้กเกอร์น่ารักจัง';
-//                 $case = 1; 
-             
 // }
-//////////////////////////////////////////
-             return $this->replymessage($replyToken,$userMessage,$case);
+// // else{
+// //       $userMessage  = 'สติ้กเกอร์น่ารักจัง';
+// //                 $case = 1; 
+             
+// // }
+// //////////////////////////////////////////
+//              return $this->replymessage($replyToken,$userMessage,$case);
           
         
-    }
-     public function sequents_question($seqcode)
-    {          
-                   // $question = sequents::select('question')
-                   //              ->where('seqcode',$seqcode)
-                   //              ->first();
-        $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
-        $dbconn = pg_pconnect($conn_string);
-                $result = pg_query($dbconn,"SELECT question FROM sequents WHERE seqcode = '$seqcode'");
-                while ($row = pg_fetch_object($result)) {
-                   return  $row->question;
-                }  
+//     }
+//      public function sequents_question($seqcode)
+//     {          
+//                    // $question = sequents::select('question')
+//                    //              ->where('seqcode',$seqcode)
+//                    //              ->first();
+//         $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+//         $dbconn = pg_pconnect($conn_string);
+//                 $result = pg_query($dbconn,"SELECT question FROM sequents WHERE seqcode = '$seqcode'");
+//                 while ($row = pg_fetch_object($result)) {
+//                    return  $row->question;
+//                 }  
                  
-    }
-     public function insert_sequentsteps($user,$seqcode,$nextseqcode)
-    {          
-        $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
-        $dbconn = pg_pconnect($conn_string);  
-        $insert_sequentsteps = pg_exec($dbconn, "INSERT INTO sequentsteps(sender_id,seqcode,answer,nextseqcode,status,created_at,updated_at )VALUES('{$user}','{$seqcode}','','{$nextseqcode}','1',NOW(),NOW())") or die(pg_errormessage());
-        return $insert_sequentsteps;
-    }
-     public function update_sequentsteps($user,$seqcode,$nextseqcode)
-    {          
-          $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
-        $dbconn = pg_pconnect($conn_string);  
-        $update_sequentsteps = pg_exec($dbconn, "UPDATE sequentsteps SET  seqcode = '{$seqcode}', nextseqcode = '{$nextseqcode}' WHERE sender_id = '{$user}' ") or die(pg_errormessage());  
-        return $update_sequentsteps;
-    }
-    public function seqcode_select($user){
-        $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
-        $dbconn = pg_pconnect($conn_string);  
+//     }
+//      public function insert_sequentsteps($user,$seqcode,$nextseqcode)
+//     {          
+//         $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+//         $dbconn = pg_pconnect($conn_string);  
+//         $insert_sequentsteps = pg_exec($dbconn, "INSERT INTO sequentsteps(sender_id,seqcode,answer,nextseqcode,status,created_at,updated_at )VALUES('{$user}','{$seqcode}','','{$nextseqcode}','1',NOW(),NOW())") or die(pg_errormessage());
+//         return $insert_sequentsteps;
+//     }
+//      public function update_sequentsteps($user,$seqcode,$nextseqcode)
+//     {          
+//           $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+//         $dbconn = pg_pconnect($conn_string);  
+//         $update_sequentsteps = pg_exec($dbconn, "UPDATE sequentsteps SET  seqcode = '{$seqcode}', nextseqcode = '{$nextseqcode}' WHERE sender_id = '{$user}' ") or die(pg_errormessage());  
+//         return $update_sequentsteps;
+//     }
+//     public function seqcode_select($user){
+//         $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+//         $dbconn = pg_pconnect($conn_string);  
       
-       $result = pg_query($dbconn,"SELECT seqcode FROM sequentsteps WHERE sender_id = '$user'");
-                while ($row = pg_fetch_object($result)) {
+//        $result = pg_query($dbconn,"SELECT seqcode FROM sequentsteps WHERE sender_id = '$user'");
+//                 while ($row = pg_fetch_object($result)) {
             
-                   return $row->seqcode;
-                } 
+//                    return $row->seqcode;
+//                 } 
  
-    }
-    public function replymessage($replyToken,$userMessage,$case)
-    {
-          $httpClient = new CurlHTTPClient('cBVPEkhPN862OfgebfUG1sU1iBwk8N/Dq/Pxd5Exp3ptoOfVBuCBYYMgAsQELJunIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EsnPXQKUypoT
-            qQ7Xx2DLPs1vNVF2CUCX+wOvvh5IpmNMQdB04t89/1O/w1cDnyilFU=');
-            $bot = new LINEBot($httpClient, array('channelSecret' => 'dea55b0bcff86c1c10fcccdc8b7454cc
+//     }
+//     public function replymessage($replyToken,$userMessage,$case)
+//     {
+//           $httpClient = new CurlHTTPClient('cBVPEkhPN862OfgebfUG1sU1iBwk8N/Dq/Pxd5Exp3ptoOfVBuCBYYMgAsQELJunIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EsnPXQKUypoT
+//             qQ7Xx2DLPs1vNVF2CUCX+wOvvh5IpmNMQdB04t89/1O/w1cDnyilFU=');
+//             $bot = new LINEBot($httpClient, array('channelSecret' => 'dea55b0bcff86c1c10fcccdc8b7454cc
 
-'));
+// '));
             
-            switch($case) {
+//             switch($case) {
      
-                case 1 : 
-                        $textMessageBuilder = new TextMessageBuilder($userMessage);
-                    break;
-                case 2 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $actionBuilder = array(
-                                          new MessageTemplateActionBuilder(
-                                          'ใช่',// ข้อความแสดงในปุ่ม
-                                          '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'ไม่ใช่',// ข้อความแสดงในปุ่ม
-                                          '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'ไม่แน่ใจ',// ข้อความแสดงในปุ่ม
-                                          '3' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ) 
-                                         );
-                    $imageUrl = NULL;
-                    $textMessage2 = new TemplateMessageBuilder('Template',
-                     new ButtonTemplateBuilder(
-                              NULL, // กำหนดหัวเรื่อง
-                              'ผู้ป่วยเป็นผู้ชายหรือผู้หญิงวัยหมดประจำเดือนหรือได้คุมกำเนิดด้วยวิธีทำหมัน, ฉีดยาคุม, ฝังยาคุมหรือใส่ห่วงอนามัยแล้วใช่หรือไม่?', // กำหนดรายละเอียด
-                               $imageUrl, // กำหนด url รุปภาพ
-                               $actionBuilder  // กำหนด action object
-                         )
-                      );    
-                 $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break;
-                  case 3 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $actionBuilder = array(
-                                          new MessageTemplateActionBuilder(
-                                          'ตกลง',// ข้อความแสดงในปุ่ม
-                                          '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'มีปัญหาการคุมกำเนิด',// ข้อความแสดงในปุ่ม
-                                          '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          )
-                                         );
-                    $imageUrl = NULL;
-                    $textMessage2 = new TemplateMessageBuilder('Template',
-                     new ButtonTemplateBuilder(
-                              'โปรดอ่านข้างบนก่อน', // กำหนดหัวเรื่อง
-                              'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
-                               $imageUrl, // กำหนด url รุปภาพ
-                               $actionBuilder  // กำหนด action object
-                         )
-                      );    
-                 $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break;
-             case 4 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/1.png';
-                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/1.png';
-                        $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
+//                 case 1 : 
+//                         $textMessageBuilder = new TextMessageBuilder($userMessage);
+//                     break;
+//                 case 2 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $actionBuilder = array(
+//                                           new MessageTemplateActionBuilder(
+//                                           'ใช่',// ข้อความแสดงในปุ่ม
+//                                           '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'ไม่ใช่',// ข้อความแสดงในปุ่ม
+//                                           '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'ไม่แน่ใจ',// ข้อความแสดงในปุ่ม
+//                                           '3' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ) 
+//                                          );
+//                     $imageUrl = NULL;
+//                     $textMessage2 = new TemplateMessageBuilder('Template',
+//                      new ButtonTemplateBuilder(
+//                               NULL, // กำหนดหัวเรื่อง
+//                               'ผู้ป่วยเป็นผู้ชายหรือผู้หญิงวัยหมดประจำเดือนหรือได้คุมกำเนิดด้วยวิธีทำหมัน, ฉีดยาคุม, ฝังยาคุมหรือใส่ห่วงอนามัยแล้วใช่หรือไม่?', // กำหนดรายละเอียด
+//                                $imageUrl, // กำหนด url รุปภาพ
+//                                $actionBuilder  // กำหนด action object
+//                          )
+//                       );    
+//                  $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break;
+//                   case 3 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $actionBuilder = array(
+//                                           new MessageTemplateActionBuilder(
+//                                           'ตกลง',// ข้อความแสดงในปุ่ม
+//                                           '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'มีปัญหาการคุมกำเนิด',// ข้อความแสดงในปุ่ม
+//                                           '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           )
+//                                          );
+//                     $imageUrl = NULL;
+//                     $textMessage2 = new TemplateMessageBuilder('Template',
+//                      new ButtonTemplateBuilder(
+//                               'โปรดอ่านข้างบนก่อน', // กำหนดหัวเรื่อง
+//                               'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
+//                                $imageUrl, // กำหนด url รุปภาพ
+//                                $actionBuilder  // กำหนด action object
+//                          )
+//                       );    
+//                  $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break;
+//              case 4 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $picFullSize = 'https://bot-laravel.herokuapp.com/images/1.png';
+//                         $picThumbnail = 'https://bot-laravel.herokuapp.com/images/1.png';
+//                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
-                  $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break;
-             case 5 : 
-                    $actionBuilder = array(
-                                          new MessageTemplateActionBuilder(
-                                          'ใช่',// ข้อความแสดงในปุ่ม
-                                          '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'ไม่ใช่',// ข้อความแสดงในปุ่ม
-                                          '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'มีเอกสารไม่ครบ',// ข้อความแสดงในปุ่ม
-                                          '3' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          )
-                                         );
-                    $imageUrl = NULL;
-                    $textMessageBuilder = new TemplateMessageBuilder('Template',
-                     new ButtonTemplateBuilder(
-                               NULL, // กำหนดหัวเรื่อง
-                               $userMessage, // กำหนดรายละเอียด
-                               $imageUrl, // กำหนด url รุปภาพ
-                               $actionBuilder  // กำหนด action object
-                         )
-                      ); 
-                    break;
-               case 6 : 
-                    $actionBuilder = array(
-                                          new MessageTemplateActionBuilder(
-                                          'ใช่',// ข้อความแสดงในปุ่ม
-                                          '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'ไม่ใช่',// ข้อความแสดงในปุ่ม
-                                          '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          )
-                                         );
-                    $imageUrl = NULL;
-                    $textMessageBuilder = new TemplateMessageBuilder('Template',
-                     new ButtonTemplateBuilder(
-                              $userMessage, // กำหนดหัวเรื่อง
-                              'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
-                               $imageUrl, // กำหนด url รุปภาพ
-                               $actionBuilder  // กำหนด action object
-                         )
-                      );    
-                    break;
-                case 7 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/2-3.png';
-                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/2-3.png';
-                        $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
+//                   $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break;
+//              case 5 : 
+//                     $actionBuilder = array(
+//                                           new MessageTemplateActionBuilder(
+//                                           'ใช่',// ข้อความแสดงในปุ่ม
+//                                           '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'ไม่ใช่',// ข้อความแสดงในปุ่ม
+//                                           '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'มีเอกสารไม่ครบ',// ข้อความแสดงในปุ่ม
+//                                           '3' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           )
+//                                          );
+//                     $imageUrl = NULL;
+//                     $textMessageBuilder = new TemplateMessageBuilder('Template',
+//                      new ButtonTemplateBuilder(
+//                                NULL, // กำหนดหัวเรื่อง
+//                                $userMessage, // กำหนดรายละเอียด
+//                                $imageUrl, // กำหนด url รุปภาพ
+//                                $actionBuilder  // กำหนด action object
+//                          )
+//                       ); 
+//                     break;
+//                case 6 : 
+//                     $actionBuilder = array(
+//                                           new MessageTemplateActionBuilder(
+//                                           'ใช่',// ข้อความแสดงในปุ่ม
+//                                           '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'ไม่ใช่',// ข้อความแสดงในปุ่ม
+//                                           '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           )
+//                                          );
+//                     $imageUrl = NULL;
+//                     $textMessageBuilder = new TemplateMessageBuilder('Template',
+//                      new ButtonTemplateBuilder(
+//                               $userMessage, // กำหนดหัวเรื่อง
+//                               'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
+//                                $imageUrl, // กำหนด url รุปภาพ
+//                                $actionBuilder  // กำหนด action object
+//                          )
+//                       );    
+//                     break;
+//                 case 7 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $picFullSize = 'https://bot-laravel.herokuapp.com/images/2-3.png';
+//                         $picThumbnail = 'https://bot-laravel.herokuapp.com/images/2-3.png';
+//                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
-                  $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break;  
-                  case 8 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $actionBuilder = array(
-                                           new MessageTemplateActionBuilder(
-                                          'ใช่',// ข้อความแสดงในปุ่ม
-                                          '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'ไม่ใช่',// ข้อความแสดงในปุ่ม
-                                          '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'มีเอกสารไม่ครบ',// ข้อความแสดงในปุ่ม
-                                          '3' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          )
-                                         );
-                    $imageUrl = NULL;
-                    $textMessage2 = new TemplateMessageBuilder('Template',
-                     new ButtonTemplateBuilder(
-                              'โปรดอ่านข้างบนก่อน', // กำหนดหัวเรื่อง
-                              'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
-                               $imageUrl, // กำหนด url รุปภาพ
-                               $actionBuilder  // กำหนด action object
-                         )
-                      );    
-                  $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break; 
-                case 9 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/4.png';
-                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/4.png';
-                        $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
+//                   $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break;  
+//                   case 8 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $actionBuilder = array(
+//                                            new MessageTemplateActionBuilder(
+//                                           'ใช่',// ข้อความแสดงในปุ่ม
+//                                           '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'ไม่ใช่',// ข้อความแสดงในปุ่ม
+//                                           '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'มีเอกสารไม่ครบ',// ข้อความแสดงในปุ่ม
+//                                           '3' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           )
+//                                          );
+//                     $imageUrl = NULL;
+//                     $textMessage2 = new TemplateMessageBuilder('Template',
+//                      new ButtonTemplateBuilder(
+//                               'โปรดอ่านข้างบนก่อน', // กำหนดหัวเรื่อง
+//                               'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
+//                                $imageUrl, // กำหนด url รุปภาพ
+//                                $actionBuilder  // กำหนด action object
+//                          )
+//                       );    
+//                   $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break; 
+//                 case 9 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $picFullSize = 'https://bot-laravel.herokuapp.com/images/4.png';
+//                         $picThumbnail = 'https://bot-laravel.herokuapp.com/images/4.png';
+//                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
-                  $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break;  
-                case 10 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/5.png';
-                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/5.png';
-                        $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
+//                   $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break;  
+//                 case 10 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $picFullSize = 'https://bot-laravel.herokuapp.com/images/5.png';
+//                         $picThumbnail = 'https://bot-laravel.herokuapp.com/images/5.png';
+//                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
-                  $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break;  
-                case 11 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $picFullSize = 'https://bot-laravel.herokuapp.com/images/6.png';
-                        $picThumbnail = 'https://bot-laravel.herokuapp.com/images/6.png';
-                        $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
+//                   $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break;  
+//                 case 11 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $picFullSize = 'https://bot-laravel.herokuapp.com/images/6.png';
+//                         $picThumbnail = 'https://bot-laravel.herokuapp.com/images/6.png';
+//                         $textMessage2 = new ImageMessageBuilder($picFullSize,$picThumbnail);
                       
-                  $multiMessage = new MultiMessageBuilder;
-                  $multiMessage->add($textMessage1);
-                  $multiMessage->add($textMessage2);
-                  $textMessageBuilder = $multiMessage; 
-                    break;  
-                case 12 : 
-                    $actionBuilder = array(
-                                          new MessageTemplateActionBuilder(
-                                          'ต้องการ',// ข้อความแสดงในปุ่ม
-                                          '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                           new MessageTemplateActionBuilder(
-                                          'ไม่ต้องการ',// ข้อความแสดงในปุ่ม
-                                          '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          )
-                                         );
-                    $imageUrl = NULL;
-                    $textMessageBuilder = new TemplateMessageBuilder('Template',
-                     new ButtonTemplateBuilder(
-                              $userMessage, // กำหนดหัวเรื่อง
-                              'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
-                               $imageUrl, // กำหนด url รุปภาพ
-                               $actionBuilder  // กำหนด action object
-                         )
-                      );    
-                    break;
-                case 13 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $Message = 'งั้นขอตัวไปก่อนจนกว่าจะมีเคสใหม่นะคะ/ครับ';
-                        $textMessage2 = new TextMessageBuilder($Message);
-                        $multiMessage = new MultiMessageBuilder;
-                        $multiMessage->add($textMessage1);
-                        $multiMessage->add($textMessage2);
-                        $textMessageBuilder = $multiMessage; 
-                    break;
-                case 14 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $Message = 'งั้นขอตัวไปก่อนจนกว่าจะมีเคสใหม่นะคะ/ครับ';
-                        $textMessage2 = new TextMessageBuilder($Message);
-                        $multiMessage = new MultiMessageBuilder;
-                        $multiMessage->add($textMessage1);
-                        $multiMessage->add($textMessage2);
-                        $textMessageBuilder = $multiMessage; 
-                    break;
-                case 15 : 
-                        $textMessage1 = new TextMessageBuilder($userMessage);
-                        $Message = 'งั้นขอตัวไปก่อนจนกว่าจะมีเคสใหม่นะคะ/ครับ';
-                        $actionBuilder = array(
-                                          new MessageTemplateActionBuilder(
-                                          'ขอติดต่อพยาบาล',// ข้อความแสดงในปุ่ม
-                                          'ขอติดต่อพยาบาล' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                          ),
-                                         );
-                        $imageUrl = NULL;
-                        $textMessage2 = new TemplateMessageBuilder('Template',
-                        new ButtonTemplateBuilder(
-                              NULL, // กำหนดหัวเรื่อง
-                              'หากมีปัญหาในการส่งรูป กด "ขอติดต่อพยาบาล"', // กำหนดรายละเอียด
-                               $imageUrl, // กำหนด url รุปภาพ
-                               $actionBuilder  // กำหนด action object
-                           )
-                        );    
-                        $multiMessage = new MultiMessageBuilder;
-                        $multiMessage->add($textMessage1);
-                        $multiMessage->add($textMessage2);
-                        $textMessageBuilder = $multiMessage; 
-                    break;
+//                   $multiMessage = new MultiMessageBuilder;
+//                   $multiMessage->add($textMessage1);
+//                   $multiMessage->add($textMessage2);
+//                   $textMessageBuilder = $multiMessage; 
+//                     break;  
+//                 case 12 : 
+//                     $actionBuilder = array(
+//                                           new MessageTemplateActionBuilder(
+//                                           'ต้องการ',// ข้อความแสดงในปุ่ม
+//                                           '1' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                            new MessageTemplateActionBuilder(
+//                                           'ไม่ต้องการ',// ข้อความแสดงในปุ่ม
+//                                           '2' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           )
+//                                          );
+//                     $imageUrl = NULL;
+//                     $textMessageBuilder = new TemplateMessageBuilder('Template',
+//                      new ButtonTemplateBuilder(
+//                               $userMessage, // กำหนดหัวเรื่อง
+//                               'กดเลือกด้านล่างได้เลยค่ะ', // กำหนดรายละเอียด
+//                                $imageUrl, // กำหนด url รุปภาพ
+//                                $actionBuilder  // กำหนด action object
+//                          )
+//                       );    
+//                     break;
+//                 case 13 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $Message = 'งั้นขอตัวไปก่อนจนกว่าจะมีเคสใหม่นะคะ/ครับ';
+//                         $textMessage2 = new TextMessageBuilder($Message);
+//                         $multiMessage = new MultiMessageBuilder;
+//                         $multiMessage->add($textMessage1);
+//                         $multiMessage->add($textMessage2);
+//                         $textMessageBuilder = $multiMessage; 
+//                     break;
+//                 case 14 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $Message = 'งั้นขอตัวไปก่อนจนกว่าจะมีเคสใหม่นะคะ/ครับ';
+//                         $textMessage2 = new TextMessageBuilder($Message);
+//                         $multiMessage = new MultiMessageBuilder;
+//                         $multiMessage->add($textMessage1);
+//                         $multiMessage->add($textMessage2);
+//                         $textMessageBuilder = $multiMessage; 
+//                     break;
+//                 case 15 : 
+//                         $textMessage1 = new TextMessageBuilder($userMessage);
+//                         $Message = 'งั้นขอตัวไปก่อนจนกว่าจะมีเคสใหม่นะคะ/ครับ';
+//                         $actionBuilder = array(
+//                                           new MessageTemplateActionBuilder(
+//                                           'ขอติดต่อพยาบาล',// ข้อความแสดงในปุ่ม
+//                                           'ขอติดต่อพยาบาล' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+//                                           ),
+//                                          );
+//                         $imageUrl = NULL;
+//                         $textMessage2 = new TemplateMessageBuilder('Template',
+//                         new ButtonTemplateBuilder(
+//                               NULL, // กำหนดหัวเรื่อง
+//                               'หากมีปัญหาในการส่งรูป กด "ขอติดต่อพยาบาล"', // กำหนดรายละเอียด
+//                                $imageUrl, // กำหนด url รุปภาพ
+//                                $actionBuilder  // กำหนด action object
+//                            )
+//                         );    
+//                         $multiMessage = new MultiMessageBuilder;
+//                         $multiMessage->add($textMessage1);
+//                         $multiMessage->add($textMessage2);
+//                         $textMessageBuilder = $multiMessage; 
+//                     break;
  
               
-            }
-            $response = $bot->replyMessage($replyToken,$textMessageBuilder); 
-    }
+//             }
+//             $response = $bot->replyMessage($replyToken,$textMessageBuilder); 
+//     }
    
 }
