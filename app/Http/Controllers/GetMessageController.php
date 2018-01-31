@@ -97,9 +97,7 @@ class GetMessageController extends Controller
                 //  }
       
                 // $seqcode = $this->seqcode_select($user);
-            $userMessage= '555555555555555';
-             $textMessageBuilder = new TextMessageBuilder($userMessage);
-             $response = $bot->replyMessage($replyToken,$textMessageBuilder); 
+            $response = $this->bot->replyText($replyToken, 'hello!');
 
  }       
 //////////////////////////////////////////////////////////////////
