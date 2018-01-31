@@ -54,19 +54,20 @@ class GetMessageController extends Controller
      * @return \Illuminate\Http\Response
      */
    
-     public function index(){
-        $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
-        $dbconn = pg_pconnect($conn_string);
+     // public function index(){
+     //    $conn_string = "host=ec2-54-235-249-33.compute-1.amazonaws.com port=5432 dbname=d8hs21dt7982d1 user=fbkfmrzztwtyve password=3bc51779a47c036832502ba77117ce30c65a96edd6f99a6b0f69b854d7d12db7";
+     //    $dbconn = pg_pconnect($conn_string);
             
-          $user = 'Uc45702b2bf51da1426172a256add3792';
+     //      $user = 'Uc45702b2bf51da1426172a256add3792';
                    
-     }
+     // }
      public function getmessage()
     {         
     
             $httpClient = new CurlHTTPClient('cBVPEkhPN862OfgebfUG1sU1iBwk8N/Dq/Pxd5Exp3ptoOfVBuCBYYMgAsQELJunIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EsnPXQKUypoTqQ7Xx2DLPs1vNVF2CUCX+wOvvh5IpmNMQdB04t89/1O/w1cDnyilFU=
 ');
-            $bot = new LINEBot($httpClient, array('channelSecret' => 'df081e404b4755b307fed6a49ceeb8b6
+            $bot = new LINEBot($httpClient, array('channelSecret' => 'dea55b0bcff86c1c10fcccdc8b7454cc
+
 '));
             // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
             $content = file_get_contents('php://input');
@@ -516,8 +517,10 @@ if($typeMessage=='text'){
     }
     public function replymessage($replyToken,$userMessage,$case)
     {
-          $httpClient = new CurlHTTPClient('cBVPEkhPN862OfgebfUG1sU1iBwk8N/Dq/Pxd5Exp3ptoOfVBuCBYYMgAsQELJunIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EsnPXQKUypoTqQ7Xx2DLPs1vNVF2CUCX+wOvvh5IpmNMQdB04t89/1O/w1cDnyilFU=');
-            $bot = new LINEBot($httpClient, array('channelSecret' => 'df081e404b4755b307fed6a49ceeb8b6
+          $httpClient = new CurlHTTPClient('cBVPEkhPN862OfgebfUG1sU1iBwk8N/Dq/Pxd5Exp3ptoOfVBuCBYYMgAsQELJunIWXGKX10nBr+tQWd02aTW07B1vnXoDb+85qY5vJC2EsnPXQKUypoT
+            qQ7Xx2DLPs1vNVF2CUCX+wOvvh5IpmNMQdB04t89/1O/w1cDnyilFU=');
+            $bot = new LINEBot($httpClient, array('channelSecret' => 'dea55b0bcff86c1c10fcccdc8b7454cc
+
 '));
             
             switch($case) {
