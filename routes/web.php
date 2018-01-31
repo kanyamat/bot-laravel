@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-	return phpinfo();
-    return view('welcome');
-});
+// Route::get('/', function () {
+// 	return phpinfo();
+//     return view('welcome');
+// });
+
+Route::get('pp','GetMessageController@index');
