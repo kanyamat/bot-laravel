@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::get('bott', function (Request $request) {
+Route::get('bot', function (Request $request) {
     logger("message request : ", $request->all());
 });
-Route::post('bott', ['as' => 'line.bot.message', 'uses' => 'GetMessageController@getmessage']);
+Route::post('bot', ['as' => 'line.bot.message', 'uses' => 'GetMessageController@getmessage']);
